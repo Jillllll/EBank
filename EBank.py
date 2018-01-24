@@ -67,7 +67,8 @@ def query(account_id):
     with open('account_info.json', 'r') as f:
         account_info = json.load(f)
     print (
-        'Here is your account info : Balance:%s;Bill:%s' % (account_info[account_id], 15000 - account_info[account_id]))
+            'Here is your account info : Balance:%s;Bill:%s' % (
+        account_info[account_id], 15000 - account_info[account_id]))
 
 
 def spend(account_id, password, amount):
@@ -92,21 +93,21 @@ def withdraw(account_id, amount):
 
 def bookkeeping_withdraw(account_id, amount):
     'take every expense down'
-    account_book = open('%s.json' % account_id, 'w+')
+    account_book = open('%s.json' % account_id, 'a+')
     if len(account_book.read()) != 0:
         with open('%s.json' % account_id, 'r') as f:
             account_book_dict = json.load(f)
         bookkeeping_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         account_book_dict[bookkeeping_time] = [' Withdrew: ', amount]
-        with open('%s.json'%account_id, 'a') as f:
-            json.dump(account_book_dict[bookkeeping_time], f)
+        with open('%s.json' % account_id, 'w') as f:
+            json.dump(account_book_dict, f)
         return True
     else:
         account_book_dict = {}
         bookkeeping_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         account_book_dict[bookkeeping_time] = [' Withdrew: ', amount]
-        with open('%s.json'%account_id, 'w') as f:
-            json.dump(account_book_dict[bookkeeping_time], f)
+        with open('%s.json' % account_id, 'w') as f:
+            json.dump(account_book_dict, f)
         return True
 
 
