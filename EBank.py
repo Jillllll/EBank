@@ -120,7 +120,6 @@ def generate_bills():
         with open('account_info.json','r') as f:
             account_info_dict = json.load(f)
         type(account_info_dict)
-        for i in
 
     return
 
