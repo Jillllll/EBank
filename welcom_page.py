@@ -46,3 +46,5 @@ while True:
             print ('Wrong account or password')
     else:
         print ('Please input 1 or 2')
+
+EBank.generate_bills()

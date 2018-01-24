@@ -2,6 +2,7 @@
 # _*_ coding:utf-8_*_
 import json
 import time
+import yaml
 
 
 def new_account(account_id, account_password):
@@ -108,20 +109,23 @@ def bookkeeping_withdraw(account_id, amount):
 
 def check_bills(account_id):
     with open('%s.json' % account_id, 'r') as f:
-        bill_dict = json.load(f)
-    print json.dumps(str(bill_dict))
+        bill_dict = yaml.load(f)
+    print bill_dict
     return True
 
 
 def generate_bills():
     'genernate a bill list every 30th of a month'
     localtime = time.localtime(time.time())
-    if localtime[2] == 30 :
-        with open('account_info.json','r') as f:
-            account_info_dict = json.load(f)
-        type(account_info_dict)
-
-    return
+    if localtime[2] == 30:
+        with open('account_info.json', 'r') as f:
+            account_info_dict = yaml.load(f)
+        for keys, values in account_info_dict.items():
+            if values < 15000:
+                print 'Account %s bills:' % keys, 15000 - values
+                with open('bills.json', 'w') as f:
+                    json.dump(account_info_dict[keys], f)
+    return True
 
 
 def spend(account_id, password, amount):
