@@ -22,7 +22,7 @@ while True:
         account_password = raw_input('Please input password:')
         log_account_check = EBank.log_account(account_id, account_password)
         if log_account_check is True:
-            todo_tup2 = ('Show my account information', 'Withdraw', 'Check my bills')
+            todo_tup2 = ('Show my account information', 'Withdraw with 5% interests', 'Check my bills')
             for i, element in enumerate(todo_tup2, start=1):
                 print i, todo_tup2[i - 1]
             todo_choice2 = raw_input('Welcome %s!What do you expect to do?' % account_id)
@@ -35,8 +35,10 @@ while True:
                 if withdraw_result is True:
                     EBank.bookkeeping_withdraw(account_id, amount)
                     break
+                else:
+                    break
             elif todo_choice2 == '3':
-                EBank.displaybills(account_id)
+                EBank.check_bills(account_id)
                 break
             else:
                 print('Please input 1/2 or 3')

@@ -71,20 +71,15 @@ def query(account_id):
         account_info[account_id], 15000 - account_info[account_id]))
 
 
-def spend(account_id, password, amount):
-    'for external requests.Balance verification needed.'
-    return
-
-
 def withdraw(account_id, amount):
     'balance verification needed.'
     with open('account_info.json', 'r') as f:
         account_info_dict = json.load(f)
-    if account_info_dict[account_id] - amount < 0:
+    if account_info_dict[account_id] - amount * 1.05 < 0:
         print "Sorry you have insufficient balance"
         return False
     else:
-        account_info_dict[account_id] -= amount
+        account_info_dict[account_id] -= amount * 1.05
         print 'Withdrew successfully!'
         with open('account_info.json', 'w') as f:
             json.dump(account_info_dict, f)
@@ -98,21 +93,40 @@ def bookkeeping_withdraw(account_id, amount):
         with open('%s.json' % account_id, 'r') as f:
             account_book_dict = json.load(f)
         bookkeeping_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        account_book_dict[bookkeeping_time] = [' Withdrew: ', amount]
+        account_book_dict[bookkeeping_time] = [' withdrew: ', amount, 'with interest: ', amount * 0.05]
         with open('%s.json' % account_id, 'w') as f:
             json.dump(account_book_dict, f)
         return True
     else:
         account_book_dict = {}
         bookkeeping_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        account_book_dict[bookkeeping_time] = [' Withdrew: ', amount]
+        account_book_dict[bookkeeping_time] = [' withdrew: ', amount, 'with interest: ', amount * 0.05]
         with open('%s.json' % account_id, 'w') as f:
             json.dump(account_book_dict, f)
         return True
 
 
-def bill_generate():
+def check_bills(account_id):
+    with open('%s.json' % account_id, 'r') as f:
+        bill_dict = json.load(f)
+    print json.dumps(str(bill_dict))
+    return True
+
+
+def generate_bills():
     'genernate a bill list every 30th of a month'
+    localtime = time.localtime(time.time())
+    if localtime[2] == 30 :
+        with open('account_info.json','r') as f:
+            account_info_dict = json.load(f)
+        type(account_info_dict)
+        for i in
+
+    return
+
+
+def spend(account_id, password, amount):
+    'for external requests.Balance verification needed.'
     return
 
 
