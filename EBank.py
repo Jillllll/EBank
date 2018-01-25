@@ -154,8 +154,9 @@ def payback(account_id, amount):
     balance = account_info_dict[account_id]
     if balance + amount <= 15000:
         account_info_dict[account_id] += amount
-        with open('account_info.json', 'w') as f:
-            json.dump(account_info_dict, f)
+        #        with open('account_info.json', 'w') as f:
+        #            json.dump(account_info_dict, f)
+        json.dump(account_info_dict, open('account_info.jaon', 'w'))
         return True
     else:
         print('Payback amount is bigger than your debt.Payback fails.')
