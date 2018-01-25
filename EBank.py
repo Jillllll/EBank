@@ -108,10 +108,14 @@ def bookkeeping_withdraw(account_id, amount):
 
 
 def check_bills(account_id):
-    with open('%s.json' % account_id, 'r') as f:
-        bill_dict = yaml.load(f)
-    print bill_dict
-    return True
+    bill_file = open('%s.json', 'r')
+    if len(bill_file.read()) != 0:
+        with open('%s.json' % account_id, 'r') as f:
+            bill_dict = yaml.load(f)
+        print bill_dict
+        return True
+    else:
+        print("All of your bills have been paid off or you currently don't have any debt")
 
 
 def generate_bills():
