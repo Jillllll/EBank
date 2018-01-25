@@ -130,12 +130,33 @@ def generate_bills():
 
 def spend(account_id, password, amount):
     'for external requests.Balance verification needed.'
-    return
+    account_id = raw_input('Pleas input an account:')
+    password = raw_input('Please input password:')
+    if log_account(account_id, password) is True:
+        with open('account_info.json', 'r') as f:
+            account_id_dict = json.load(f)
+        if account_id_dict[account_id] - amount >= 0:
+            account_id_dict[account_id] -= amount
+            with open('account_info.json', 'w') as f:
+                json.dump(account_id_dict, f)
+            return True
+        else:
+            return False
+    else:
+        print('Wrong account or password!')
+        return False
 
 
-def payback():
+def payback(account_id, amount):
     'pay back bills,add up the balance.'
-
-
-def check_password(account_id, password):
-    return
+    with open('account_info.json', 'r') as f:
+        account_info_dict = json.load(f)
+    balance = account_info_dict[account_id]
+    if balance + amount <= 15000:
+        account_info_dict[account_id] += amount
+        with open('account_info.json', 'w') as f:
+            json.dump(account_info_dict, f)
+        return True
+    else:
+        print('Payback amount is bigger than your debt.Payback fails.')
+        return False
